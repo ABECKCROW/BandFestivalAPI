@@ -19,20 +19,20 @@ public class BandServiceImpl implements BandService {
     public Band findById(int id){
         return bandMapper.findById(id);
     }
-    @Override
-    public void create(String name) {
-        Band newBand = new Band();
-        newBand.setBandName(name);
-        bandMapper.create(newBand);
-    }
-    @Override
-    public void update(int id, String name) throws Exception {
-        Band bandToUpdate = bandMapper.findById(id);
-        if(bandToUpdate == null) {
-            throw new Exception("Band not found with ID: " + id);
-        }
-        bandToUpdate.setBandName(name);
-        bandMapper.update(bandToUpdate);
-    }
+//    @Override
+//    public void create(String name) {
+//        Band newBand = new Band();
+//        newBand.setBandName(name);
+//        bandMapper.create(newBand);
+//    }
+//    @Override
+//    public void update(int id, String name) throws Exception {
+//        Band bandToUpdate = bandMapper.findById(id);
+//        if(bandToUpdate == null) {
+//            throw new Exception("Band not found with ID: " + id);
+//        }
+//        bandToUpdate.setBandName(name);
+//        bandMapper.update(bandToUpdate);
+//    }
 }
 
