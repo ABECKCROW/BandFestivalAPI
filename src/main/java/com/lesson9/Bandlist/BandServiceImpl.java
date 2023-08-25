@@ -1,5 +1,8 @@
 package com.lesson9.Bandlist;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -9,6 +12,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class BandServiceImpl implements BandService {
+    private final Logger logger = LoggerFactory.getLogger(BandServiceImpl.class);
+
     private BandMapper bandMapper;
 
     public BandServiceImpl(BandMapper bandMapper) {
@@ -23,28 +28,19 @@ public class BandServiceImpl implements BandService {
         return bandMapper.findById(id);
     }
     @Override
-    public List<Band> getBandsByDate(ZonedDateTime date){
+    public List<Band> getBandsByDate(ZonedDateTime date) {
         List<Band> allBands = bandMapper.findAll();
-        return allBands.stream().filter(band -> {
-            ZonedDateTime announcementDate = band.getActAnnouncementDate();
-            return announcementDate != null && announcementDate.isBefore(date);
-        })
-                .collect(Collectors.toList());
-    }
-//    @Override
-//    public void create(String name) {
-//        Band newBand = new Band();
-//        newBand.setBandName(name);
-//        bandMapper.create(newBand);
-//    }
-//    @Override
-//    public void update(int id, String name) throws Exception {
-//        Band bandToUpdate = bandMapper.findById(id);
-//        if(bandToUpdate == null) {
-//            throw new Exception("Band not found with ID: " + id);
-//        }
-//        bandToUpdate.setBandName(name);
-//        bandMapper.update(bandToUpdate);
-//    }
-}
+        logger.debug("All bands from the database: {}", allBands);
+        logger.debug("Query date: {}", date);
 
+        List<Band> filteredBands = allBands.stream().filter(band -> {
+            ZonedDateTime announcementDate = band.getActAnnouncementDate();
+            logger.debug("Band: {}, Announcement Date: {}", band.getBandName(), announcementDate);
+            return announcementDate != null && announcementDate.isBefore(date);
+        }).collect(Collectors.toList());
+
+        logger.debug("Filtered bands: {}", filteredBands);
+
+        return filteredBands;
+    }
+}
