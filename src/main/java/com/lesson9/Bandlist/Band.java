@@ -7,7 +7,7 @@ public class Band {
     private String bandName;
     private ZonedDateTime actAnnouncementDate;
 
-    public Band() {
+    public Band(int id, String bandName, ZonedDateTime actAnnouncementDate) {
         this.id = id;
         this.bandName = bandName;
         this.actAnnouncementDate = actAnnouncementDate;
