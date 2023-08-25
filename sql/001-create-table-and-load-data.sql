@@ -29,3 +29,4 @@ INSERT INTO members (member_name, part, band_id) VALUES ("Uchida", "Gt&Vo", 2);
 INSERT INTO members (member_name, part, band_id) VALUES ("Kishi", "Gt", 2);
 INSERT INTO members (member_name, part, band_id) VALUES ("Sudo", "Ba", 2);
 INSERT INTO members (member_name, part, band_id) VALUES ("Isomura", "Drum", 2);
+INSERT INTO members (member_name, part, band_id) VALUES ("Saitoh", "Gt&Vo", 3);
