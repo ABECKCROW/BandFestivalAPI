@@ -38,8 +38,21 @@
 |  8 | Isomura     | Drum  |       2 |
 |  9 | Saitoh      | Gt&Vo |       3 |
 
-
-
-
-
 ### 動作確認
+
+①
+```
+curl --location 'http://localhost:8080/bands/all/names'
+```
+<img width="1245" alt="スクリーンショット 2023-08-27 16 42 10" src="https://github.com/ABECKCROW/lecture09/assets/136610341/335674c4-233c-4e86-bb3f-c51624c7d768">
+
+
+```
+curl --location 'http://localhost:8080/bands/announced/names'
+```
+
+<img width="1243" alt="スクリーンショット 2023-08-27 16 40 14" src="https://github.com/ABECKCROW/lecture09/assets/136610341/50fed30b-47f7-4f7c-903e-174dcaae3cde">
+
+
+
+
