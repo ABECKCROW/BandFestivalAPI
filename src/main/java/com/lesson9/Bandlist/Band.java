@@ -1,39 +1,18 @@
 package com.lesson9.Bandlist;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.ZonedDateTime;
 
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
 public class Band {
     private int id;
     private String bandName;
     private ZonedDateTime actAnnouncementDate;
-
-    public Band(int id, String bandName, ZonedDateTime actAnnouncementDate) {
-        this.id = id;
-        this.bandName = bandName;
-        this.actAnnouncementDate = actAnnouncementDate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getBandName() {
-        return bandName;
-    }
-
-    public ZonedDateTime getActAnnouncementDate() {
-        return actAnnouncementDate;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setBandName(String bandName) {
-        this.bandName = bandName;
-    }
-
-    public void setActAnnouncementDate(ZonedDateTime actAnnouncementDate) {
-        this.actAnnouncementDate = actAnnouncementDate;
-    }
 }
