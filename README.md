@@ -46,7 +46,7 @@ curl --location 'http://localhost:8080/bands/all/names'
 ```
 <img width="1245" alt="スクリーンショット 2023-08-27 16 42 10" src="https://github.com/ABECKCROW/lecture09/assets/136610341/335674c4-233c-4e86-bb3f-c51624c7d768">
 
-***
+*** 
 
 ### ②
 ```
