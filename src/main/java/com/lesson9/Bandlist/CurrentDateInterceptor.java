@@ -13,7 +13,7 @@ public class CurrentDateInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(@Nonnull HttpServletRequest request,
                              @Nonnull HttpServletResponse response,
-                             @Nonnull Object handler) throws Exception{
+                             @Nonnull Object handler) throws Exception {
         //リクエストごとに今日の日付をセット
         ZonedDateTime currentDate = ZonedDateTime.now();
         request.setAttribute("currentDate", currentDate);
@@ -25,14 +25,15 @@ public class CurrentDateInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(@Nonnull HttpServletRequest request,
-                           @Nonnull HttpServletResponse response ,
-                           @Nonnull Object handler, ModelAndView modelAndView) throws Exception{
+                           @Nonnull HttpServletResponse response,
+                           @Nonnull Object handler, ModelAndView modelAndView) throws Exception {
         //何も処理しない
     }
+
     @Override
     public void afterCompletion(@Nonnull HttpServletRequest request,
                                 @Nonnull HttpServletResponse response,
-                                @Nonnull Object handler, Exception ex)throws Exception{
+                                @Nonnull Object handler, Exception ex) throws Exception {
         //何も処理しない
     }
 }
