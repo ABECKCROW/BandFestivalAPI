@@ -42,7 +42,7 @@
 
 ### 動作確認
 
-### ①
+### ①bandsテーブルよりact_Announcement_Dateを除いたidとband_nameをReadする。  
 ```
 curl --location 'http://localhost:8080/bands/all/names'
 ```
@@ -50,7 +50,7 @@ curl --location 'http://localhost:8080/bands/all/names'
 
 *** 
 
-### ②
+### ②act_Announcement_Dateが今日以前の①をReadする。
 ```
 curl --location 'http://localhost:8080/bands/announced/names'
 ```
