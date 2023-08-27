@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/bands")
-    public class BandController {
+public class BandController {
     private final BandService bandService;
     private final HttpServletRequest request;
 
@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
         this.request = request;
     }
 
-    @GetMapping("/all/names")
+    @GetMapping("/names")
     public List<BandResponse> allBandNames() {
         List<Band> bandNames = bandService.findAll();
         List<BandResponse> response = bandNames.stream().map(BandResponse::new).toList();
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
     }
 
     @GetMapping("/announced/names")
-    public List<BandResponse> announcedBandNames(){
+    public List<BandResponse> announcedBandNames() {
         ZonedDateTime currentDate = (ZonedDateTime) request.getAttribute("currentDate");
         List<Band> bands = bandService.getBandsByDate(currentDate);
         List<BandResponse> responses = bands.stream().map(BandResponse::new).collect(Collectors.toList());
