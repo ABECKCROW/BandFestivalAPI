@@ -16,7 +16,7 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public List<Band> findAll() {
-        return bandMapper.findAll();
+        return bandMapper.findAllUniqueBands();
     }
 
     @Override
@@ -26,7 +26,7 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public List<Band> getBandsByDate(ZonedDateTime date) {
-        List<Band> allBands = bandMapper.findAll();
+        List<Band> allBands = bandMapper.findAllUniqueBands();
         return allBands.stream().filter(band -> {
                     ZonedDateTime announcementDate = band.getActAnnouncementDate();
                     return announcementDate != null && announcementDate.isBefore(date);
