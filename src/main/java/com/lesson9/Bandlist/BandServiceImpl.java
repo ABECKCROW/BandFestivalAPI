@@ -3,7 +3,6 @@ package com.lesson9.Bandlist;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,21 +13,24 @@ public class BandServiceImpl implements BandService {
     public BandServiceImpl(BandMapper bandMapper) {
         this.bandMapper = bandMapper;
     }
+
     @Override
     public List<Band> findAll() {
         return bandMapper.findAll();
     }
+
     @Override
-    public Band findById(int id){
+    public Band findById(int id) {
         return bandMapper.findById(id);
     }
+
     @Override
-    public List<Band> getBandsByDate(ZonedDateTime date){
+    public List<Band> getBandsByDate(ZonedDateTime date) {
         List<Band> allBands = bandMapper.findAll();
         return allBands.stream().filter(band -> {
-            ZonedDateTime announcementDate = band.getActAnnouncementDate();
-            return announcementDate != null && announcementDate.isBefore(date);
-        })
+                    ZonedDateTime announcementDate = band.getActAnnouncementDate();
+                    return announcementDate != null && announcementDate.isBefore(date);
+                })
                 .collect(Collectors.toList());
     }
 //    @Override
