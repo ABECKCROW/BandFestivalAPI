@@ -1,4 +1,4 @@
-package com.lesson9.Bandlist;
+package com.lesson9.Bandlist.entity;
 
 public class Member {
     private int id;
@@ -12,6 +12,7 @@ public class Member {
         this.part = part;
         this.bandId = bandId;
     }
+
     public int getId() {
         return id;
     }

@@ -1,5 +1,7 @@
-package com.lesson9.Bandlist;
+package com.lesson9.Bandlist.service;
 
+import com.lesson9.Bandlist.entity.Band;
+import com.lesson9.Bandlist.mapper.BandMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;

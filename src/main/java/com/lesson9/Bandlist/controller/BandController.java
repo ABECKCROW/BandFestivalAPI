@@ -1,5 +1,8 @@
-package com.lesson9.Bandlist;
+package com.lesson9.Bandlist.controller;
 
+import com.lesson9.Bandlist.controller.response.BandResponse;
+import com.lesson9.Bandlist.entity.Band;
+import com.lesson9.Bandlist.service.BandService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

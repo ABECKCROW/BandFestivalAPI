@@ -1,4 +1,4 @@
-package com.lesson9.Bandlist;
+package com.lesson9.Bandlist.interceptor;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,5 +1,6 @@
-package com.lesson9.Bandlist;
+package com.lesson9.Bandlist.controller.response;
 
+import com.lesson9.Bandlist.entity.Band;
 import lombok.Getter;
 
 @Getter

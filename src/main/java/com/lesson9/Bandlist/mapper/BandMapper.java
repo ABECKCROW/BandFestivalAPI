@@ -1,5 +1,6 @@
-package com.lesson9.Bandlist;
+package com.lesson9.Bandlist.mapper;
 
+import com.lesson9.Bandlist.entity.Band;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;

@@ -1,4 +1,4 @@
-package com.lesson9.Bandlist;
+package com.lesson9.Bandlist.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
