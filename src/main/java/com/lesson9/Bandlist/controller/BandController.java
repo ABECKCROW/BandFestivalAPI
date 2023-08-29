@@ -35,16 +35,14 @@ public class BandController {
     @GetMapping("/names")
     public List<BandResponse> allBandNames() {
         List<Band> bandNames = bandService.findAll();
-        List<BandResponse> response = bandNames.stream().map(BandResponse::new).toList();
-        return response;
+        return bandNames.stream().map(BandResponse::new).toList();
     }
 
     @GetMapping("/announced/names")
     public List<BandResponse> announcedBandNames() {
         ZonedDateTime currentDate = (ZonedDateTime) request.getAttribute("currentDate");
         List<Band> bands = bandService.getBandsByDate(currentDate);
-        List<BandResponse> responses = bands.stream().map(BandResponse::new).collect(Collectors.toList());
-        return responses;
+        return bands.stream().map(BandResponse::new).collect(Collectors.toList());
     }
 
     @PostMapping("/create-band")
