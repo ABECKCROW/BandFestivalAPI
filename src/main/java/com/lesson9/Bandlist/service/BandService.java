@@ -11,6 +11,8 @@ public interface BandService {
     Band findById(int id) throws Exception;
 
     List<Band> getBandsByDate(ZonedDateTime date);
-//    void create(String name);
-//    void update(int id, String name) throws Exception;
+
+    void createBands(String name, ZonedDateTime actAnnouncementDate);
+
+    void updateBands(Band bandToUpdate) throws Exception;
 }

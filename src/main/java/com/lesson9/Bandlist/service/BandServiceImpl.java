@@ -35,20 +35,37 @@ public class BandServiceImpl implements BandService {
                 })
                 .collect(Collectors.toList());
     }
-//    @Override
-//    public void create(String name) {
-//        Band newBand = new Band();
-//        newBand.setBandName(name);
-//        bandMapper.create(newBand);
-//    }
-//    @Override
-//    public void update(int id, String name) throws Exception {
-//        Band bandToUpdate = bandMapper.findById(id);
-//        if(bandToUpdate == null) {
-//            throw new Exception("Band not found with ID: " + id);
-//        }
-//        bandToUpdate.setBandName(name);
-//        bandMapper.update(bandToUpdate);
-//    }
-}
 
+    @Override
+    public void createBands(String name, ZonedDateTime actAnnouncementDate) {
+        if (isBandNameDuplicate(name)) {
+            throw new IllegalArgumentException("Band name is already taken");
+        }
+        Band newBand = new Band();
+        newBand.setBandName(name);
+        bandMapper.create(newBand);
+    }
+
+    private boolean isBandNameDuplicate(String name) {
+        Band existingBand = bandMapper.findByName(name);
+        return existingBand != null;
+    }
+
+    @Override
+    public void updateBands(Band bandToUpdate) throws Exception {
+        if (bandToUpdate == null) {
+            throw new Exception("Band not found with ID: ");
+        }
+
+        int id = bandToUpdate.getId();
+        String name = bandToUpdate.getBandName();
+
+        Band existingBand = bandMapper.findById(id);
+        if (existingBand == null) {
+            throw new Exception("Band not found with ID: " + id);
+        }
+
+        existingBand.setBandName(name);
+        bandMapper.update(bandToUpdate);
+    }
+}
