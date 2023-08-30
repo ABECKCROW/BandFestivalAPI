@@ -34,7 +34,7 @@ public class BandController {
 
     @GetMapping("/names")
     public List<BandResponse> allBandNames() {
-        List<Band> bandNames = bandService.findAll();
+        List<Band> bandNames = bandService.findAllUniqueBands();
         return bandNames.stream().map(BandResponse::new).toList();
     }
 
@@ -45,9 +45,9 @@ public class BandController {
         return bands.stream().map(BandResponse::new).collect(Collectors.toList());
     }
 
-    @PostMapping("/create-band")
+    @PostMapping("/create")
     public ResponseEntity<String> createBand(@RequestBody CreateBandForm form) {
-        bandService.createBands(form.getName(), form.getActAnnouncementDate());
+        bandService.createBands(form.getBandname(), form.getActAnnouncementDate());
 
         URI url = UriComponentsBuilder.fromUriString("http://localhost:8080").path("/names/id")
                 .build()

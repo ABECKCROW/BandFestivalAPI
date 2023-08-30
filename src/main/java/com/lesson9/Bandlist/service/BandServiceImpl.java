@@ -17,7 +17,7 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public List<Band> findAll() {
+    public List<Band> findAllUniqueBands() {
         return bandMapper.findAllUniqueBands();
     }
 
@@ -37,17 +37,17 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public void createBands(String name, ZonedDateTime actAnnouncementDate) {
-        if (isBandNameDuplicate(name)) {
+    public void createBands(String bandName, ZonedDateTime actAnnouncementDate) {
+        if (isBandNameDuplicate(bandName)) {
             throw new IllegalArgumentException("Band name is already taken");
         }
-        Band newBand = new Band();
-        newBand.setBandName(name);
+
+        Band newBand = new Band(0, bandName, actAnnouncementDate);
         bandMapper.create(newBand);
     }
 
-    private boolean isBandNameDuplicate(String name) {
-        Band existingBand = bandMapper.findByName(name);
+    private boolean isBandNameDuplicate(String bandName) {
+        Band existingBand = bandMapper.findByName(bandName);
         return existingBand != null;
     }
 

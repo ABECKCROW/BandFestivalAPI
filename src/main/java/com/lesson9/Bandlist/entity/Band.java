@@ -15,7 +15,4 @@ public class Band {
     private int id;
     private String bandName;
     private ZonedDateTime actAnnouncementDate;
-
-    public Band() {
-    }
 }

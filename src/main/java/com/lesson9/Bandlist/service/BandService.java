@@ -6,13 +6,13 @@ import java.time.ZonedDateTime;
 import java.util.List;
 
 public interface BandService {
-    List<Band> findAll();
+    List<Band> findAllUniqueBands();
 
     Band findById(int id) throws Exception;
 
     List<Band> getBandsByDate(ZonedDateTime date);
 
-    void createBands(String name, ZonedDateTime actAnnouncementDate);
+    void createBands(String bandName, ZonedDateTime actAnnouncementDate);
 
     void updateBands(Band bandToUpdate) throws Exception;
 }
