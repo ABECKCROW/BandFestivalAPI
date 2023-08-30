@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class BandServiceImpl implements BandService {
-    private BandMapper bandMapper;
+    private final BandMapper bandMapper;
 
     public BandServiceImpl(BandMapper bandMapper) {
         this.bandMapper = bandMapper;
