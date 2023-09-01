@@ -14,7 +14,7 @@ import java.util.List;
 
 @Mapper
 public interface BandMapper {
-    @Select("SELECT DISTINCT b.id, b.band_name, b.act_Announcement_Date FROM bands b INNER JOIN members m ON b.id = m.band_id")
+    @Select("SELECT DISTINCT b.id, b.band_name, b.act_announcement_date FROM bands b INNER JOIN members m ON b.id = m.band_id")
     List<Band> findAllUniqueBands();
 
     @Select("SELECT * FROM bands WHERE band_name = #{name}")
@@ -24,18 +24,18 @@ public interface BandMapper {
     @Select("SELECT * FROM bands WHERE band_name = #{name}")
     Band findByName(String bandName);
 
-    @Select("SELECT * FROM bands WHERE act_Announcement_Date IS NOT NULL AND act_Announcement_Date < #{date}")
+    @Select("SELECT * FROM bands WHERE act_announcement_date IS NOT NULL AND act_announcement_date < #{date}")
     List<Band> findBandsByAnnouncementDateBefore(ZonedDateTime date);
 //    List<Band> findBandsByAnnouncementDateBefore(@Param("actAnnouncementDate") ZonedDateTime date);
 
     @Results({
             @Result(property = "bandName", column = "band_name"),
-            @Result(property = "actAnnouncementDate", column = "act_Announcement_Date")
+            @Result(property = "actAnnouncementDate", column = "act_announcement_date")
     })
-    @Insert("INSERT INTO bands (band_Name, act_Announcement_Date) VALUES (#{band_Name}, #{act_Announcement_Date})")
+    @Insert("INSERT INTO bands (band_name, act_announcement_date) VALUES (#{band_name}, #{act_announcement_date})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void create(Band band);
 
-    @Update("UPDATE bands SET act_Announcement_Date = #{date} WHERE id = #{id}")
+    @Update("UPDATE bands SET act_announcement_date = #{date} WHERE id = #{id}")
     void update(Band bandToUpdate);
 }
