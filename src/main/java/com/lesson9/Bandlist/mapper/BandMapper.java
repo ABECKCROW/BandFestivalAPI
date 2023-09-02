@@ -4,8 +4,6 @@ import com.lesson9.Bandlist.entity.Band;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -17,25 +15,19 @@ public interface BandMapper {
     @Select("SELECT DISTINCT b.id, b.band_name, b.act_announcement_date FROM bands b INNER JOIN members m ON b.id = m.band_id")
     List<Band> findAllUniqueBands();
 
-    @Select("SELECT * FROM bands WHERE band_name = #{name}")
+    @Select("SELECT * FROM bands WHERE band_name = #{bandName}")
     Band findById(int id);
-//    Band findByName(@Param("bandName") String name);
 
-    @Select("SELECT * FROM bands WHERE band_name = #{name}")
+    @Select("SELECT * FROM bands WHERE band_name = #{bandName}")
     Band findByName(String bandName);
 
-    @Select("SELECT * FROM bands WHERE act_announcement_date IS NOT NULL AND act_announcement_date < #{date}")
+    @Select("SELECT * FROM bands WHERE act_announcement_date IS NOT NULL AND act_announcement_date < #{actAnnouncementDate}")
     List<Band> findBandsByAnnouncementDateBefore(ZonedDateTime date);
-//    List<Band> findBandsByAnnouncementDateBefore(@Param("actAnnouncementDate") ZonedDateTime date);
 
-    @Results({
-            @Result(property = "bandName", column = "band_name"),
-            @Result(property = "actAnnouncementDate", column = "act_announcement_date")
-    })
     @Insert("INSERT INTO bands (band_name, act_announcement_date) VALUES (#{bandName}, #{actAnnouncementDate})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void create(Band band);
 
-    @Update("UPDATE bands SET act_announcement_date = #{date} WHERE id = #{id}")
+    @Update("UPDATE bands SET act_announcement_date = #{actAnnouncementDate} WHERE id = #{id}")
     void update(Band bandToUpdate);
 }
