@@ -32,7 +32,7 @@ public interface BandMapper {
             @Result(property = "bandName", column = "band_name"),
             @Result(property = "actAnnouncementDate", column = "act_announcement_date")
     })
-    @Insert("INSERT INTO bands (band_name, act_announcement_date) VALUES (#{band_name}, #{act_announcement_date})")
+    @Insert("INSERT INTO bands (band_name, act_announcement_date) VALUES (#{bandName}, #{actAnnouncementDate})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void create(Band band);
 
