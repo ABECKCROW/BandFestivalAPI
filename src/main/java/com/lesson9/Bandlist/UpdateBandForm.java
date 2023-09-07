@@ -11,8 +11,4 @@ public class UpdateBandForm {
     private int id;
     private String UpdatedName;
     private String actAnnouncementDate;
-
-    public UpdateBandForm() {
-
-    }
 }

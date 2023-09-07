@@ -1,10 +1,12 @@
 package com.lesson9.Bandlist.service;
 
+import com.lesson9.Bandlist.UpdateBandForm;
 import com.lesson9.Bandlist.entity.Band;
 import com.lesson9.Bandlist.mapper.BandMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -52,20 +54,21 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public void updateBands(Band bandToUpdate) throws Exception {
-        if (bandToUpdate == null) {
-            throw new Exception("Band not found with ID: ");
-        }
-
-        int id = bandToUpdate.getId();
-        String name = bandToUpdate.getBandName();
-
-        Band existingBand = bandMapper.findById(id);
+    public List<UpdateBandForm> updateBands(int id, UpdateBandForm form) {
+        Band existingBand = findById(id);
         if (existingBand == null) {
-            throw new Exception("Band not found with ID: " + id);
+            throw new IllegalArgumentException("Band not found with ID: " + id);
         }
+        String updatedName = form.getUpdatedName();
+        String actAnnouncementDate = form.getActAnnouncementDate();
 
-        existingBand.setBandName(name);
-        bandMapper.update(bandToUpdate);
+        existingBand.setBandName(updatedName);
+        existingBand.setActAnnouncementDate(ZonedDateTime.parse(actAnnouncementDate));
+
+        bandMapper.update(existingBand);
+
+        List<UpdateBandForm> updatedForms = new ArrayList<>();
+        updatedForms.add(form);
+        return updatedForms;
     }
 }

@@ -28,6 +28,6 @@ public interface BandMapper {
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
     void create(Band band);
 
-    @Update("UPDATE bands SET act_announcement_date = #{actAnnouncementDate} WHERE id = #{id}")
+    @Update("UPDATE bands SET band_name = #{bandName},　act_announcement_date = #{actAnnouncementDate} WHERE id = #{id}")
     void update(Band bandToUpdate);
 }

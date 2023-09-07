@@ -1,5 +1,6 @@
 package com.lesson9.Bandlist.service;
 
+import com.lesson9.Bandlist.UpdateBandForm;
 import com.lesson9.Bandlist.entity.Band;
 
 import java.time.ZonedDateTime;
@@ -14,5 +15,5 @@ public interface BandService {
 
     void createBands(String bandName, ZonedDateTime actAnnouncementDate);
 
-    void updateBands(Band bandToUpdate) throws Exception;
+    List<UpdateBandForm> updateBands(int id, UpdateBandForm form);
 }

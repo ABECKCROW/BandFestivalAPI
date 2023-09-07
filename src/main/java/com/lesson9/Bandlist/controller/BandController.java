@@ -55,27 +55,9 @@ public class BandController {
         return ResponseEntity.created(url).body("name successfully created");
     }
 
-    @PatchMapping("/update-band")
-    public ResponseEntity<List<UpdateBandForm>> update(@PathVariable("id") int id, @RequestBody UpdateBandForm form) {
-        List<UpdateBandForm> updateBandForms = performUpdate(id, form);
+    @PatchMapping("/update/{id}")
+    public ResponseEntity<List<UpdateBandForm>> update(@PathVariable("id") int id, @RequestBody UpdateBandForm form) throws Exception {
+        List<UpdateBandForm> updateBandForms = bandService.updateBands(id, form);
         return ResponseEntity.ok(updateBandForms);
-    }
-
-    private List<UpdateBandForm> performUpdate(int id, UpdateBandForm form) {
-        Band bandToUpdate = null;
-        try {
-            bandToUpdate = bandService.findById(id);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        bandToUpdate.setBandName(form.getUpdatedName());
-        try {
-            bandService.updateBands(bandToUpdate);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        UpdateBandForm updatedForm = new UpdateBandForm();
-        updatedForm.setUpdatedName(bandToUpdate.getBandName());
-        return List.of(updatedForm);
     }
 }
