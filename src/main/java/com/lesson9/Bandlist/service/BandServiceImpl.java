@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,8 +25,8 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public Band findById(int id) {
-        return bandMapper.findById(id);
+    public Optional<Band> findById(int id) {
+        return Optional.ofNullable(bandMapper.findById(id));
     }
 
     @Override
@@ -55,10 +56,12 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public List<UpdateBandForm> updateBands(int id, UpdateBandForm form) {
-        Band existingBand = findById(id);
-        if (existingBand == null) {
+        Optional<Band> existingBandOptional = findById(id);
+        if (!existingBandOptional.isPresent()) {
             throw new IllegalArgumentException("Band not found with ID: " + id);
         }
+
+        Band existingBand = existingBandOptional.get();
         String updatedName = form.getUpdatedName();
         String actAnnouncementDate = form.getActAnnouncementDate();
 

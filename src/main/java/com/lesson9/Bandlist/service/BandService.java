@@ -5,11 +5,12 @@ import com.lesson9.Bandlist.entity.Band;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface BandService {
     List<Band> findAllUniqueBands();
 
-    Band findById(int id) throws Exception;
+    Optional<Band> findById(int id) throws Exception;
 
     List<Band> getBandsByDate(ZonedDateTime date);
 
