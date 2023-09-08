@@ -1,6 +1,7 @@
 package com.lesson9.Bandlist.mapper;
 
 import com.lesson9.Bandlist.entity.Band;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
@@ -32,4 +33,7 @@ public interface BandMapper {
 
     @Update("UPDATE bands SET band_name = #{bandName}, act_announcement_date = #{actAnnouncementDate} WHERE id = #{id}")
     void update(Band existingBand);
+
+    @Delete("DELETE FROM bands WHERE id = #{id}")
+    int deleteBands(int id);
 }

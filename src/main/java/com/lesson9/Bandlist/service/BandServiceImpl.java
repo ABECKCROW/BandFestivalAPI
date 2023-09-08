@@ -74,4 +74,9 @@ public class BandServiceImpl implements BandService {
         updatedForms.add(form);
         return updatedForms;
     }
+
+    @Override
+    public int deleteBands(int id) {
+        return bandMapper.deleteBands(id);
+    }
 }

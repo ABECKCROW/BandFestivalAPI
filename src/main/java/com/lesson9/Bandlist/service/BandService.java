@@ -17,4 +17,6 @@ public interface BandService {
     void createBands(String bandName, ZonedDateTime actAnnouncementDate);
 
     List<UpdateBandForm> updateBands(int id, UpdateBandForm form);
+
+    int deleteBands(int id);
 }

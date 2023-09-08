@@ -7,6 +7,7 @@ import com.lesson9.Bandlist.entity.Band;
 import com.lesson9.Bandlist.service.BandService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -59,5 +60,11 @@ public class BandController {
     public ResponseEntity<List<UpdateBandForm>> update(@PathVariable("id") int id, @RequestBody UpdateBandForm form) throws Exception {
         List<UpdateBandForm> updateBandForms = bandService.updateBands(id, form);
         return ResponseEntity.ok(updateBandForms);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteBand(@PathVariable int id) {
+        int deleteBand = bandService.deleteBands(id);
+        return ResponseEntity.ok("Band with ID " + id + " has been deleted.");
     }
 }
