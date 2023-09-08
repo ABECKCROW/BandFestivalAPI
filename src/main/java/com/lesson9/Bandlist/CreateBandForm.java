@@ -14,12 +14,10 @@ public class CreateBandForm {
     }
 
     @NotBlank(message = "名前の入力をしてください。")
-    private final int id;
     private final String bandName;
     private final ZonedDateTime actAnnouncementDate;
 
-    public CreateBandForm(int id, String bandName, ZonedDateTime actAnnouncementDate) {
-        this.id = id;
+    public CreateBandForm(String bandName, ZonedDateTime actAnnouncementDate) {
         this.bandName = bandName;
         this.actAnnouncementDate = actAnnouncementDate;
     }
