@@ -14,8 +14,7 @@ import java.util.List;
 @Mapper
 public interface BandMapper {
 
-
-    @Select("SELECT DISTINCT b.id, b.band_name, b.act_announcement_date FROM bands b INNER JOIN members m ON b.id = m.band_id")
+    @Select("SELECT DISTINCT b.id, b.band_name, b.act_announcement_date FROM bands b LEFT JOIN members m ON b.id = m.band_id")
     List<Band> findAllUniqueBands();
 
     @Select("SELECT * FROM bands WHERE id = #{id}")
