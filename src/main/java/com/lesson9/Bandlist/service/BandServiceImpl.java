@@ -62,7 +62,7 @@ public class BandServiceImpl implements BandService {
         }
 
         Band existingBand = existingBandOptional.get();
-        String updatedName = form.getUpdatedName();
+        String updatedName = form.getBandName();
         String actAnnouncementDate = form.getActAnnouncementDate();
 
         existingBand.setBandName(updatedName);

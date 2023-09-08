@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class UpdateBandForm {
-    private int id;
-    private String UpdatedName;
+    private String bandName;
     private String actAnnouncementDate;
 }
