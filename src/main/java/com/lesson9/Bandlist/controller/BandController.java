@@ -64,7 +64,7 @@ public class BandController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<String> deleteBand(@PathVariable int id) {
-        int deleteBand = bandService.deleteBands(id);
+        bandService.deleteBands(id);
         return ResponseEntity.ok("Band with ID " + id + " has been deleted.");
     }
 }
