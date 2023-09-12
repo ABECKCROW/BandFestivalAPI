@@ -40,13 +40,14 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public void createBands(String bandName, ZonedDateTime actAnnouncementDate) {
+    public int createBands(String bandName, ZonedDateTime actAnnouncementDate) {
         if (isBandNameDuplicate(bandName)) {
             throw new IllegalArgumentException("Band name is already taken");
         }
 
         Band newBand = new Band(0, bandName, actAnnouncementDate);
         bandMapper.create(newBand);
+        return newBand.getId();
     }
 
     private boolean isBandNameDuplicate(String bandName) {

@@ -48,11 +48,13 @@ public class BandController {
 
     @PostMapping("/create")
     public ResponseEntity<String> createBand(@RequestBody CreateBandForm form) {
-        bandService.createBands(form.getBandName(), form.getActAnnouncementDate());
+        int createId = bandService.createBands(form.getBandName(), form.getActAnnouncementDate());
 
-        URI url = UriComponentsBuilder.fromUriString("http://localhost:8080").path("/names/id")
+        URI url = UriComponentsBuilder.fromUriString("http://localhost:8080")
+                .path("/names/" + createId)
                 .build()
                 .toUri();
+
         return ResponseEntity.created(url).body("name successfully created");
     }
 

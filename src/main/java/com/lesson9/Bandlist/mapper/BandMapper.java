@@ -28,7 +28,7 @@ public interface BandMapper {
 
     @Insert("INSERT INTO bands (band_name, act_announcement_date) VALUES (#{bandName}, #{actAnnouncementDate})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-    void create(Band band);
+    int create(Band band);
 
     @Update("UPDATE bands SET band_name = #{bandName}, act_announcement_date = #{actAnnouncementDate} WHERE id = #{id}")
     void update(Band existingBand);
