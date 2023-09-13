@@ -18,7 +18,7 @@ public interface BandMapper {
     List<Band> findAllUniqueBands();
 
     @Select("SELECT * FROM bands WHERE id = #{id}")
-    Band findById(int id);
+   Optional<Band> findById(int id);
 
     @Select("SELECT * FROM bands WHERE band_name = #{bandName}")
     Band findByName(String bandName);
