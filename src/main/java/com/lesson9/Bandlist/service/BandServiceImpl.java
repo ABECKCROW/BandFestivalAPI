@@ -61,8 +61,10 @@ public class BandServiceImpl implements BandService {
         Band existingBand = findById(id)
                 .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
 
-        existingBand.setBandName(form.getBandName());
-        existingBand.setActAnnouncementDate(form.getActAnnouncementDate());
+        Band updatedBand = form.toBand();
+
+        existingBand.setBandName(updatedBand.getBandName());
+        existingBand.setActAnnouncementDate(updatedBand.getActAnnouncementDate());
 
         bandMapper.update(existingBand);
         return existingBand;
