@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Update;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Mapper
 public interface BandMapper {
@@ -18,20 +19,20 @@ public interface BandMapper {
     List<Band> findAllUniqueBands();
 
     @Select("SELECT * FROM bands WHERE id = #{id}")
-   Optional<Band> findById(int id);
+    Optional<Band> findById(int id);
 
     @Select("SELECT * FROM bands WHERE band_name = #{bandName}")
-    Band findByName(String bandName);
+    Optional<Band> findByName(String bandName);
 
     @Select("SELECT * FROM bands WHERE act_announcement_date IS NOT NULL AND act_announcement_date < #{actAnnouncementDate}")
     List<Band> findBandsByAnnouncementDateBefore(ZonedDateTime date);
 
     @Insert("INSERT INTO bands (band_name, act_announcement_date) VALUES (#{bandName}, #{actAnnouncementDate})")
     @Options(useGeneratedKeys = true, keyColumn = "id", keyProperty = "id")
-    int create(Band band);
+    void createAndGetId(Band newBand);
 
     @Update("UPDATE bands SET band_name = #{bandName}, act_announcement_date = #{actAnnouncementDate} WHERE id = #{id}")
-    void update(Band existingBand);
+    void update(Band updatedBands);
 
     @Delete("DELETE FROM bands WHERE id = #{id}")
     int deleteBands(int id);

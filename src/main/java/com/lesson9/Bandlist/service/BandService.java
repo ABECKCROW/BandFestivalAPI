@@ -2,6 +2,7 @@ package com.lesson9.Bandlist.service;
 
 import com.lesson9.Bandlist.UpdateBandForm;
 import com.lesson9.Bandlist.entity.Band;
+import org.apache.ibatis.javassist.NotFoundException;
 
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -16,7 +17,7 @@ public interface BandService {
 
     int createBands(String bandName, ZonedDateTime actAnnouncementDate);
 
-    List<UpdateBandForm> updateBands(int id, UpdateBandForm form);
+    Band updateBands(int id, UpdateBandForm form) throws NotFoundException;
 
     int deleteBands(int id);
 }

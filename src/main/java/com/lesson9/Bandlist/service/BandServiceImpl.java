@@ -3,10 +3,10 @@ package com.lesson9.Bandlist.service;
 import com.lesson9.Bandlist.UpdateBandForm;
 import com.lesson9.Bandlist.entity.Band;
 import com.lesson9.Bandlist.mapper.BandMapper;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -25,8 +25,10 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public Optional<Band> findById(int id) {
-        return Optional.ofNullable(bandMapper.findById(id));
+    public Optional<Band> findById(int id) throws NotFoundException {
+        Optional<Band> band = bandMapper.findById(id);
+        return Optional.ofNullable(band)
+                .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
     }
 
     @Override
@@ -41,39 +43,32 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public int createBands(String bandName, ZonedDateTime actAnnouncementDate) {
-        if (isBandNameDuplicate(bandName)) {
+        bandMapper.findByName(bandName).ifPresent(exisitingBand -> {
             throw new IllegalArgumentException("Band name is already taken");
-        }
+        });
 
         Band newBand = new Band(0, bandName, actAnnouncementDate);
-        bandMapper.create(newBand);
+        bandMapper.createAndGetId(newBand);
         return newBand.getId();
     }
 
-    private boolean isBandNameDuplicate(String bandName) {
-        Band existingBand = bandMapper.findByName(bandName);
-        return existingBand != null;
+    private Optional<Band> isBandNameDuplicate(String bandName) {
+        return bandMapper.findByName(bandName);
     }
 
     @Override
-    public List<UpdateBandForm> updateBands(int id, UpdateBandForm form) {
+    public Band updateBands(int id, UpdateBandForm form) throws NotFoundException {
         Optional<Band> existingBandOptional = findById(id);
-        if (!existingBandOptional.isPresent()) {
-            throw new IllegalArgumentException("Band not found with ID: " + id);
+        if (existingBandOptional.isEmpty()) {
+            throw new NotFoundException("Band not found with ID: " + id);
+        } else {
+            Band existingBand = existingBandOptional.get();
+            existingBand.setBandName(form.getBandName());
+            existingBand.setActAnnouncementDate(form.getActAnnouncementDate());
+
+            bandMapper.update(existingBand);
+            return existingBand;
         }
-
-        Band existingBand = existingBandOptional.get();
-        String updatedName = form.getBandName();
-        String actAnnouncementDate = form.getActAnnouncementDate();
-
-        existingBand.setBandName(updatedName);
-        existingBand.setActAnnouncementDate(ZonedDateTime.parse(actAnnouncementDate));
-
-        bandMapper.update(existingBand);
-
-        List<UpdateBandForm> updatedForms = new ArrayList<>();
-        updatedForms.add(form);
-        return updatedForms;
     }
 
     @Override
