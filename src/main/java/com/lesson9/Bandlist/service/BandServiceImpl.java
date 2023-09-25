@@ -58,17 +58,14 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public Band updateBands(int id, UpdateBandForm form) throws NotFoundException {
-        Optional<Band> existingBandOptional = findById(id);
-        if (existingBandOptional.isEmpty()) {
-            throw new NotFoundException("Band not found with ID: " + id);
-        } else {
-            Band existingBand = existingBandOptional.get();
-            existingBand.setBandName(form.getBandName());
-            existingBand.setActAnnouncementDate(form.getActAnnouncementDate());
+        Band existingBand = findById(id)
+                .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
 
-            bandMapper.update(existingBand);
-            return existingBand;
-        }
+        existingBand.setBandName(form.getBandName());
+        existingBand.setActAnnouncementDate(form.getActAnnouncementDate());
+
+        bandMapper.update(existingBand);
+        return existingBand;
     }
 
     @Override
