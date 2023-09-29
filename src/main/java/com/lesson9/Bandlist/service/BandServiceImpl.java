@@ -1,29 +1,34 @@
 package com.lesson9.Bandlist.service;
 
+import com.lesson9.Bandlist.UpdateBandForm;
 import com.lesson9.Bandlist.entity.Band;
 import com.lesson9.Bandlist.mapper.BandMapper;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class BandServiceImpl implements BandService {
-    private BandMapper bandMapper;
+    private final BandMapper bandMapper;
 
     public BandServiceImpl(BandMapper bandMapper) {
         this.bandMapper = bandMapper;
     }
 
     @Override
-    public List<Band> findAll() {
+    public List<Band> findAllUniqueBands() {
         return bandMapper.findAllUniqueBands();
     }
 
     @Override
-    public Band findById(int id) {
-        return bandMapper.findById(id);
+    public Optional<Band> findById(int id) throws NotFoundException {
+        Optional<Band> band = bandMapper.findById(id);
+        return Optional.ofNullable(band)
+                .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
     }
 
     @Override
@@ -35,20 +40,36 @@ public class BandServiceImpl implements BandService {
                 })
                 .collect(Collectors.toList());
     }
-//    @Override
-//    public void create(String name) {
-//        Band newBand = new Band();
-//        newBand.setBandName(name);
-//        bandMapper.create(newBand);
-//    }
-//    @Override
-//    public void update(int id, String name) throws Exception {
-//        Band bandToUpdate = bandMapper.findById(id);
-//        if(bandToUpdate == null) {
-//            throw new Exception("Band not found with ID: " + id);
-//        }
-//        bandToUpdate.setBandName(name);
-//        bandMapper.update(bandToUpdate);
-//    }
-}
 
+    @Override
+    public int createBands(String bandName, ZonedDateTime actAnnouncementDate) {
+        bandMapper.findByName(bandName).ifPresent(exisitingBand -> {
+            throw new IllegalArgumentException("Band name is already taken");
+        });
+
+        Band newBand = new Band(0, bandName, actAnnouncementDate);
+        bandMapper.createAndGetId(newBand);
+        return newBand.getId();
+    }
+
+    private Optional<Band> isBandNameDuplicate(String bandName) {
+        return bandMapper.findByName(bandName);
+    }
+
+    @Override
+    public Band updateBands(int id, UpdateBandForm form) throws NotFoundException {
+        Band existingBand = findById(id)
+                .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
+
+        existingBand.setBandName(form.getBandName());
+        existingBand.setActAnnouncementDate(form.getActAnnouncementDate());
+
+        bandMapper.update(existingBand);
+        return existingBand;
+    }
+
+    @Override
+    public int deleteBands(int id) {
+        return bandMapper.deleteBands(id);
+    }
+}
