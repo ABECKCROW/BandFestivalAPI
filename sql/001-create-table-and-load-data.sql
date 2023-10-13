@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS members;
 CREATE TABLE bands (
   id int unsigned AUTO_INCREMENT,
   band_name VARCHAR(204) NOT NULL,
-  act_Announcement_Date DATE,
+  act_announcement_date DATE,
   PRIMARY KEY(id),
   UNIQUE(band_name)
 );
@@ -18,8 +18,8 @@ CREATE TABLE members (
   FOREIGN KEY(band_id) REFERENCES bands(id)
 );
 
-INSERT INTO bands (band_name, act_Announcement_Date) VALUES ("ASIAN KUNG-FU GENERATION", '2023-08-24');
-INSERT INTO bands (band_name, act_Announcement_Date) VALUES ("Rhythmic Toy World", '2023-08-23');
+INSERT INTO bands (band_name, act_announcement_date) VALUES ("ASIAN KUNG-FU GENERATION", '2023-08-24');
+INSERT INTO bands (band_name, act_announcement_date) VALUES ("Rhythmic Toy World", '2023-08-23');
 
 INSERT INTO members (member_name, part, band_id) VALUES ("Gotoh", "Gt&Vo", 1);
 INSERT INTO members (member_name, part, band_id) VALUES ("Kita", "Gt", 1);
