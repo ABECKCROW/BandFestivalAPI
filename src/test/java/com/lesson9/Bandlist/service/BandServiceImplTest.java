@@ -32,7 +32,9 @@ class BandServiceImplTest {
         doReturn(Optional.of(new Band(1, "ASIAN KUNG-FU GENERATION", date))).when(bandMapper).findById(1);
 
         Optional<Band> actual = bandServiceImpl.findById(1);
-        assertThat(actual).isEqualTo(new Band(1, "ASIAN KUNG-FU GENERATION", date));
+        Optional<Band> expected = Optional.of(new Band(1, "ASIAN KUNG-FU GENERATION", date));
+
+        assertThat(actual).isEqualTo(expected);
         verify(bandMapper, times(1)).findById(1);
     }
 }
