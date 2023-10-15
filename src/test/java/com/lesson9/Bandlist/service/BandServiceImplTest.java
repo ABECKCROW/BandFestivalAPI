@@ -31,10 +31,9 @@ class BandServiceImplTest {
         ZonedDateTime date = ZonedDateTime.of(2023, 12, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
         doReturn(Optional.of(new Band(1, "ASIAN KUNG-FU GENERATION", date))).when(bandMapper).findById(1);
 
-        Optional<Band> actual = bandServiceImpl.findById(1);
-        Optional<Band> expected = Optional.of(new Band(1, "ASIAN KUNG-FU GENERATION", date));
-
-        assertThat(actual).isEqualTo(expected);
+        Band actual = bandServiceImpl.findById(1).orElse(null);
+        assertThat(actual).isEqualTo(new Band(1, "ASIAN KUNG-FU GENERATION", date));
         verify(bandMapper, times(1)).findById(1);
     }
 }
+
