@@ -4,17 +4,16 @@ DROP TABLE IF EXISTS members;
 DROP TABLE IF EXISTS stages;
 DROP TABLE IF EXISTS roads;
 
-CREATE TABLE Festival (
-  id int unsigned AUTO_INCREMENT,
-  event_year VARCHAR(204) NOT NULL,
+CREATE TABLE festival (
+  event_year int unsigned AUTO_INCREMENT,
   event_date DATE,
-  start_time DATE,
-  end_time DATE,
-  PRIMARY KEY(id),
+  start_time TIME,
+  end_time TIME,
+  PRIMARY KEY(event_year),
 )AUTO_INCREMENT = 2023;
 
 CREATE TABLE bands (
-  id int unsigned AUTO_INCREMENT,
+  band_id int unsigned AUTO_INCREMENT,
   band_name VARCHAR(204) NOT NULL,
   act_announcement_date DATE,
   PRIMARY KEY(id),
@@ -22,13 +21,17 @@ CREATE TABLE bands (
 );
 
 CREATE TABLE members (
-  id int unsigned AUTO_INCREMENT,
+  member_id int unsigned AUTO_INCREMENT,
   member_name VARCHAR(1019) NOT NULL,
+  member_gender VARCHAR(1) NOT NULL,
+  member_birthday DATE,
   part VARCHAR(10) NOT NULL,
   band_id int unsigned,
   PRIMARY KEY(id),
   FOREIGN KEY(band_id) REFERENCES bands(id)
 );
+
+INSERT INTO festival(event_date, start_time) VALUES ('2023-08-05', '10:00:00');
 
 INSERT INTO bands (band_name, act_announcement_date) VALUES ("ASIAN KUNG-FU GENERATION", '2023-08-24');
 INSERT INTO bands (band_name, act_announcement_date) VALUES ("Rhythmic Toy World", '2023-08-23');
