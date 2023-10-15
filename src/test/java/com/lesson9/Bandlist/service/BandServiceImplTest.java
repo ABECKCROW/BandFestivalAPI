@@ -2,6 +2,7 @@ package com.lesson9.Bandlist.service;
 
 import com.lesson9.Bandlist.entity.Band;
 import com.lesson9.Bandlist.mapper.BandMapper;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,6 +14,7 @@ import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -35,5 +37,14 @@ class BandServiceImplTest {
         assertThat(actual).isEqualTo(new Band(1, "ASIAN KUNG-FU GENERATION", date));
         verify(bandMapper, times(1)).findById(1);
     }
-}
 
+    @Test
+    public void バンド検索で存在しないIDを指定した時に例外がスローされること() {
+        doReturn(Optional.empty()).when(bandMapper).findById(99);
+        assertThatThrownBy(() -> bandServiceImpl.findById(99))
+                .isInstanceOfSatisfying(NotFoundException.class, e -> {
+                    assertThat(e.getMessage()).isEqualTo("Band not found with ID: " + 99);
+                });
+        verify(bandMapper, times(1)).findById(99);
+    }
+}

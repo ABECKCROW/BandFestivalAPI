@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface BandService {
     List<Band> findAllUniqueBands();
 
-    Optional<Band> findById(int id) throws Exception;
+    Optional<Band> findById(int id) throws NotFoundException;
 
     List<Band> getBandsByDate(ZonedDateTime date);
 

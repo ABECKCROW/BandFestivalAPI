@@ -8,8 +8,10 @@ import com.lesson9.Bandlist.service.BandService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -67,4 +71,17 @@ public class BandController {
         bandService.deleteBands(id);
         return ResponseEntity.ok("Band with ID " + id + " has been deleted.");
     }
+
+    @ExceptionHandler(value = NotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNotFound(
+            NotFoundException e, HttpServletRequest request) {
+        Map<String, String> body = new HashMap<>();
+        body.put("timestamp", ZonedDateTime.now().toString());
+        body.put("status", String.valueOf(HttpStatus.NOT_FOUND.value()));
+        body.put("error", HttpStatus.NOT_FOUND.getReasonPhrase());
+        body.put("message", e.getMessage());
+        body.put("path", request.getRequestURI());
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
 }
+
