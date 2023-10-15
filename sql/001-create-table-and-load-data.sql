@@ -1,5 +1,17 @@
+DROP TABLE IF EXISTS rij;
 DROP TABLE IF EXISTS bands;
 DROP TABLE IF EXISTS members;
+DROP TABLE IF EXISTS stages;
+DROP TABLE IF EXISTS roads;
+
+CREATE TABLE Festival (
+  id int unsigned AUTO_INCREMENT,
+  event_year VARCHAR(204) NOT NULL,
+  event_date DATE,
+  start_time DATE,
+  end_time DATE,
+  PRIMARY KEY(id),
+)AUTO_INCREMENT = 2023;
 
 CREATE TABLE bands (
   id int unsigned AUTO_INCREMENT,
