@@ -26,7 +26,7 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public Optional<Band> findById(int id) throws NotFoundException {
-        Optional<Band> band = bandMapper.findById(id);
+        Optional<Band> band = bandMapper.findByBandId(id);
         return Optional.ofNullable(band)
                 .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
     }
@@ -43,17 +43,17 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public int createBands(String bandName, ZonedDateTime actAnnouncementDate) {
-        bandMapper.findByName(bandName).ifPresent(exisitingBand -> {
+        bandMapper.findByBandName(bandName).ifPresent(exisitingBand -> {
             throw new IllegalArgumentException("Band name is already taken");
         });
 
         Band newBand = new Band(0, bandName, actAnnouncementDate);
-        bandMapper.createAndGetId(newBand);
+        bandMapper.createBandAndGetId(newBand);
         return newBand.getId();
     }
 
     private Optional<Band> isBandNameDuplicate(String bandName) {
-        return bandMapper.findByName(bandName);
+        return bandMapper.findByBandName(bandName);
     }
 
     @Override
@@ -64,12 +64,12 @@ public class BandServiceImpl implements BandService {
         existingBand.setBandName(form.getBandName());
         existingBand.setActAnnouncementDate(form.getActAnnouncementDate());
 
-        bandMapper.update(existingBand);
+        bandMapper.updateBand(existingBand);
         return existingBand;
     }
 
     @Override
     public int deleteBands(int id) {
-        return bandMapper.deleteBands(id);
+        return bandMapper.deleteBand(id);
     }
 }
