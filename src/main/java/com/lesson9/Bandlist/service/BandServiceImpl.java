@@ -26,9 +26,8 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public Optional<Band> findById(int id) throws NotFoundException {
-        Optional<Band> band = bandMapper.findById(id);
-        return Optional.ofNullable(band)
-                .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
+        Band band = bandMapper.findById(id).orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
+        return Optional.of(band);
     }
 
     @Override
