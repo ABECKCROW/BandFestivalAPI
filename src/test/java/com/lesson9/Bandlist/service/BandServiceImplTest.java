@@ -11,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,6 +29,17 @@ class BandServiceImplTest {
     @Mock
     BandMapper bandMapper;
 
+    @Test
+    public void バンド検索でfindAllUniqueBandsメソッドが呼び出されること() {
+        List<Band> bands = List.of(
+                new Band(1, "ASIAN KUNG-FU GENERATION", date),
+                new Band(2, "Rhythmic Toy World", date));
+        doReturn(bands).when(bandMapper).findAllUniqueBands();
+
+        List<Band> actual = bandServiceImpl.findAllUniqueBands();
+        assertThat(actual).isEqualTo(bands);
+    }
+    
     @Test
     public void バンド検索で存在するIDを指定した時に正常にバンドが返されること() throws Exception {
         doReturn(Optional.of(new Band(1, "ASIAN KUNG-FU GENERATION", date))).when(bandMapper).findById(1);
