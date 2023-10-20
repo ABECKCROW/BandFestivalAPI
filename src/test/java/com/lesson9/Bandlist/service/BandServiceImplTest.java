@@ -1,6 +1,7 @@
 package com.lesson9.Bandlist.service;
 
 import com.lesson9.Bandlist.entity.Band;
+import com.lesson9.Bandlist.exception.ActAnnouncementDateNullException;
 import com.lesson9.Bandlist.mapper.BandMapper;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.junit.jupiter.api.Test;
@@ -82,6 +83,19 @@ class BandServiceImplTest {
         List<Band> actual = bandServiceImpl.getBandsByDate(currentDate);
         List<Band> expected = List.of(new Band(1, "ASIAN KUNG-FU GENERATION", beforeDate));
         assertThat(actual).isEqualTo(expected);
+
+        verify(bandMapper, times(1)).findAllUniqueBands();
+    }
+
+    @Test
+    public void バンド検索で今日以前に発表されたバンドの日付情報がnullの時に例外がスローされること() {
+        List<Band> bands = List.of(
+                new Band(1, "ASIAN KUNG-FU GENERATION", null));
+        doReturn(bands).when(bandMapper).findAllUniqueBands();
+        assertThatThrownBy(() -> bandServiceImpl.getBandsByDate(currentDate))
+                .isInstanceOfSatisfying(ActAnnouncementDateNullException.class, e -> {
+                    assertThat(e.getMessage()).isEqualTo("actAnnouncementDate is null");
+                });
 
         verify(bandMapper, times(1)).findAllUniqueBands();
     }

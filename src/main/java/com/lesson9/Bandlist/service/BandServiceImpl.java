@@ -41,7 +41,7 @@ public class BandServiceImpl implements BandService {
         return allBands.stream().filter(band -> {
                     ZonedDateTime announcementDate = band.getActAnnouncementDate();
                     if (announcementDate == null) {
-                        throw new ActAnnouncementDateNullException("actAnnouncementDate is null for Band with ID: " + band.getId());
+                        throw new ActAnnouncementDateNullException("actAnnouncementDate is null");
                     }
                     return announcementDate.isBefore(date);
                 })
