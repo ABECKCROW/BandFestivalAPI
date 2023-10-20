@@ -38,8 +38,10 @@ class BandServiceImplTest {
 
         List<Band> actual = bandServiceImpl.findAllUniqueBands();
         assertThat(actual).isEqualTo(bands);
+
+        verify(bandMapper, times(1)).findAllUniqueBands();
     }
-    
+
     @Test
     public void バンド検索で存在するIDを指定した時に正常にバンドが返されること() throws Exception {
         doReturn(Optional.of(new Band(1, "ASIAN KUNG-FU GENERATION", date))).when(bandMapper).findById(1);
@@ -58,6 +60,6 @@ class BandServiceImplTest {
                 });
         verify(bandMapper, times(1)).findById(99);
     }
-
+    
     ZonedDateTime date = ZonedDateTime.of(2023, 12, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
 }
