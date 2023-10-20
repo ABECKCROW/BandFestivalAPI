@@ -100,6 +100,20 @@ class BandServiceImplTest {
         verify(bandMapper, times(1)).findAllUniqueBands();
     }
 
+    @Test
+    public void バンド検索で今日以前に発表されたバンドがない時に空のリストが返されること() {
+        List<Band> bands = List.of(
+                new Band(1, "ASIAN KUNG-FU GENERATION", afterDate),
+                new Band(2, "Rhythmic Toy World", afterDate));
+        doReturn(bands).when(bandMapper).findAllUniqueBands();
+
+        List<Band> actual = bandServiceImpl.getBandsByDate(currentDate);
+        List<Band> expected = List.of();
+        assertThat(actual).isEqualTo(expected);
+
+        verify(bandMapper, times(1)).findAllUniqueBands();
+    }
+
     ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
     ZonedDateTime beforeDate = currentDate.minusDays(1);
     ZonedDateTime afterDate = currentDate.plusDays(1);
