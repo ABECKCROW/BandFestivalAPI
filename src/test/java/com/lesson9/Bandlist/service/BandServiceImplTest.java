@@ -32,8 +32,8 @@ class BandServiceImplTest {
     @Test
     public void バンド検索でfindAllUniqueBandsメソッドが呼び出されること() {
         List<Band> bands = List.of(
-                new Band(1, "ASIAN KUNG-FU GENERATION", date),
-                new Band(2, "Rhythmic Toy World", date));
+                new Band(1, "ASIAN KUNG-FU GENERATION", currentDate),
+                new Band(2, "Rhythmic Toy World", currentDate));
         doReturn(bands).when(bandMapper).findAllUniqueBands();
 
         List<Band> actual = bandServiceImpl.findAllUniqueBands();
@@ -44,10 +44,10 @@ class BandServiceImplTest {
 
     @Test
     public void バンド検索で存在するIDを指定した時に正常にバンドが返されること() throws Exception {
-        doReturn(Optional.of(new Band(1, "ASIAN KUNG-FU GENERATION", date))).when(bandMapper).findById(1);
+        doReturn(Optional.of(new Band(1, "ASIAN KUNG-FU GENERATION", currentDate))).when(bandMapper).findById(1);
 
         Band actual = bandServiceImpl.findById(1).orElse(null);
-        assertThat(actual).isEqualTo(new Band(1, "ASIAN KUNG-FU GENERATION", date));
+        assertThat(actual).isEqualTo(new Band(1, "ASIAN KUNG-FU GENERATION", currentDate));
         verify(bandMapper, times(1)).findById(1);
     }
 
@@ -60,6 +60,22 @@ class BandServiceImplTest {
                 });
         verify(bandMapper, times(1)).findById(99);
     }
-    
-    ZonedDateTime date = ZonedDateTime.of(2023, 12, 1, 0, 0, 0, 0, ZoneId.of("UTC"));
+
+    @Test
+    public void バンド検索で今日以前に発表されたバンドが返されること() {
+        List<Band> bands = List.of(
+                new Band(1, "ASIAN KUNG-FU GENERATION", beforeDate),
+                new Band(2, "Rhythmic Toy World", afterDate));
+        doReturn(bands).when(bandMapper).findAllUniqueBands();
+
+        List<Band> actual = bandServiceImpl.getBandsByDate(currentDate);
+        List<Band> expected = List.of(new Band(1, "ASIAN KUNG-FU GENERATION", beforeDate));
+        assertThat(actual).isEqualTo(expected);
+
+        verify(bandMapper, times(1)).findAllUniqueBands();
+    }
+
+    ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+    ZonedDateTime beforeDate = currentDate.minusDays(1);
+    ZonedDateTime afterDate = currentDate.plusDays(1);
 }
