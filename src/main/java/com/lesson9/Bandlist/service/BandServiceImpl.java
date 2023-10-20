@@ -2,6 +2,7 @@ package com.lesson9.Bandlist.service;
 
 import com.lesson9.Bandlist.UpdateBandForm;
 import com.lesson9.Bandlist.entity.Band;
+import com.lesson9.Bandlist.exception.ActAnnouncementDateNullException;
 import com.lesson9.Bandlist.mapper.BandMapper;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
@@ -35,7 +36,10 @@ public class BandServiceImpl implements BandService {
         List<Band> allBands = bandMapper.findAllUniqueBands();
         return allBands.stream().filter(band -> {
                     ZonedDateTime announcementDate = band.getActAnnouncementDate();
-                    return announcementDate != null && announcementDate.isBefore(date);
+                    if (announcementDate == null) {
+                        throw new ActAnnouncementDateNullException("actAnnouncementDate is null for Band with ID: " + band.getId());
+                    }
+                    return announcementDate.isBefore(date);
                 })
                 .collect(Collectors.toList());
     }
