@@ -30,7 +30,7 @@ class BandServiceImplTest {
     BandMapper bandMapper;
 
     @Test
-    public void バンド検索でfindAllUniqueBandsメソッドが呼び出されること() {
+    public void バンド検索でfindAllUniqueBandsメソッドが呼び出されること() throws NotFoundException {
         List<Band> bands = List.of(
                 new Band(1, "ASIAN KUNG-FU GENERATION", currentDate),
                 new Band(2, "Rhythmic Toy World", currentDate));
@@ -38,6 +38,17 @@ class BandServiceImplTest {
 
         List<Band> actual = bandServiceImpl.findAllUniqueBands();
         assertThat(actual).isEqualTo(bands);
+
+        verify(bandMapper, times(1)).findAllUniqueBands();
+    }
+
+    @Test
+    public void バンド検索でバンドが存在しない時に例外がスローされること() throws NotFoundException {
+        doReturn(null).when(bandMapper).findAllUniqueBands();
+        assertThatThrownBy(() -> bandServiceImpl.findAllUniqueBands())
+                .isInstanceOfSatisfying(NotFoundException.class, e -> {
+                    assertThat(e.getMessage()).isEqualTo("No bands were found.");
+                });
 
         verify(bandMapper, times(1)).findAllUniqueBands();
     }

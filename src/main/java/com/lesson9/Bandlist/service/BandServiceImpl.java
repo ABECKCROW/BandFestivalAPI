@@ -21,8 +21,12 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public List<Band> findAllUniqueBands() {
-        return bandMapper.findAllUniqueBands();
+    public List<Band> findAllUniqueBands() throws NotFoundException {
+        List<Band> allBands = bandMapper.findAllUniqueBands();
+        if (allBands == null) {
+            throw new NotFoundException("No bands were found.");
+        }
+        return allBands;
     }
 
     @Override

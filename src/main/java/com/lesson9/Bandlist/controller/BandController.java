@@ -36,7 +36,7 @@ public class BandController {
     private final HttpServletRequest request;
 
     @GetMapping("/names")
-    public List<BandResponse> allBandNames() {
+    public List<BandResponse> allBandNames() throws NotFoundException {
         List<Band> bandNames = bandService.findAllUniqueBands();
         return bandNames.stream().map(BandResponse::new).toList();
     }
