@@ -1,6 +1,6 @@
-package com.lesson9.Bandlist.mapper;
+package com.lesson9.bandlist.mapper;
 
-import com.lesson9.Bandlist.entity.Band;
+import com.lesson9.bandlist.entity.Band;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;

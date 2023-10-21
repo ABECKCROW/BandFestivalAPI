@@ -1,4 +1,4 @@
-package com.lesson9.Bandlist;
+package com.lesson9.bandlist;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

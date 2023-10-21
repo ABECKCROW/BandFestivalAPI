@@ -1,10 +1,10 @@
-package com.lesson9.Bandlist.controller;
+package com.lesson9.bandlist.controller;
 
-import com.lesson9.Bandlist.CreateBandForm;
-import com.lesson9.Bandlist.UpdateBandForm;
-import com.lesson9.Bandlist.controller.response.BandResponse;
-import com.lesson9.Bandlist.entity.Band;
-import com.lesson9.Bandlist.service.BandService;
+import com.lesson9.bandlist.CreateBandForm;
+import com.lesson9.bandlist.UpdateBandForm;
+import com.lesson9.bandlist.controller.response.BandResponse;
+import com.lesson9.bandlist.entity.Band;
+import com.lesson9.bandlist.service.BandService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.apache.ibatis.javassist.NotFoundException;

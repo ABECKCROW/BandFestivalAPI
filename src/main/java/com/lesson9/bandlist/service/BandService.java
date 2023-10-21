@@ -1,7 +1,7 @@
-package com.lesson9.Bandlist.service;
+package com.lesson9.bandlist.service;
 
-import com.lesson9.Bandlist.UpdateBandForm;
-import com.lesson9.Bandlist.entity.Band;
+import com.lesson9.bandlist.UpdateBandForm;
+import com.lesson9.bandlist.entity.Band;
 import org.apache.ibatis.javassist.NotFoundException;
 
 import java.time.ZonedDateTime;

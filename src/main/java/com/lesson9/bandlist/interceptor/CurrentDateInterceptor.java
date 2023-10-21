@@ -1,4 +1,4 @@
-package com.lesson9.Bandlist.interceptor;
+package com.lesson9.bandlist.interceptor;
 
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;

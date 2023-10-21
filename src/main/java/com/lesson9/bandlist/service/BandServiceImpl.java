@@ -1,9 +1,9 @@
-package com.lesson9.Bandlist.service;
+package com.lesson9.bandlist.service;
 
-import com.lesson9.Bandlist.UpdateBandForm;
-import com.lesson9.Bandlist.entity.Band;
-import com.lesson9.Bandlist.exception.ActAnnouncementDateNullException;
-import com.lesson9.Bandlist.mapper.BandMapper;
+import com.lesson9.bandlist.UpdateBandForm;
+import com.lesson9.bandlist.entity.Band;
+import com.lesson9.bandlist.exception.ActAnnouncementDateNullException;
+import com.lesson9.bandlist.mapper.BandMapper;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
