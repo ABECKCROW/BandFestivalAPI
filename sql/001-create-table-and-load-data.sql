@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS members;
 CREATE TABLE bands (
   id int unsigned AUTO_INCREMENT,
   band_name VARCHAR(204) NOT NULL,
-  act_announcement_date DATE,
+  act_announcement_date DATE NOT NULL,
   PRIMARY KEY(id),
   UNIQUE(band_name)
 );
