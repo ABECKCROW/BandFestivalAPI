@@ -65,7 +65,7 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public Band updateBands(int id, UpdateBandForm form) {
-        Band existingBand = findById(id)
+        Band existingBand = bandMapper.findById(id)
                 .orElseThrow(() -> new BandNotFoundException("Band not found with ID: " + id));
 
         existingBand.setBandName(form.getBandName());
