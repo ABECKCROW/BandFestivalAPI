@@ -8,7 +8,6 @@ import com.lesson9.bandlist.exception.BandNotFoundException;
 import com.lesson9.bandlist.service.BandService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -75,7 +74,7 @@ public class BandController {
 
     @ExceptionHandler(value = BandNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFound(
-            NotFoundException e, HttpServletRequest request) {
+            BandNotFoundException e, HttpServletRequest request) {
         Map<String, String> body = new HashMap<>();
         body.put("timestamp", ZonedDateTime.now().toString());
         body.put("status", String.valueOf(HttpStatus.NOT_FOUND.value()));
