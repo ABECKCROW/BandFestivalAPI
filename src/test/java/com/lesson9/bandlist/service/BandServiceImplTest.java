@@ -31,6 +31,7 @@ class BandServiceImplTest {
 
     @Test
     public void バンド検索でfindAllUniqueBandsメソッドが呼び出されること() throws NotFoundException {
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
         List<Band> bands = List.of(
                 new Band(1, "ASIAN KUNG-FU GENERATION", currentDate),
                 new Band(2, "Rhythmic Toy World", currentDate));
@@ -44,6 +45,7 @@ class BandServiceImplTest {
 
     @Test
     public void バンド検索で存在するIDを指定した時に正常にバンドが返されること() throws Exception {
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
         doReturn(Optional.of(new Band(1, "ASIAN KUNG-FU GENERATION", currentDate))).when(bandMapper).findById(1);
 
         Band actual = bandServiceImpl.findById(1).orElse(null);
@@ -63,6 +65,9 @@ class BandServiceImplTest {
 
     @Test
     public void バンド検索で今日以前に発表されたバンドが返されること() {
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        ZonedDateTime beforeDate = currentDate.minusDays(1);
+        ZonedDateTime afterDate = currentDate.plusDays(1);
         List<Band> bands = List.of(
                 new Band(1, "ASIAN KUNG-FU GENERATION", beforeDate),
                 new Band(2, "Rhythmic Toy World", afterDate));
@@ -77,6 +82,8 @@ class BandServiceImplTest {
 
     @Test
     public void バンド検索で今日以前に発表されたバンドがない時に空のリストが返されること() {
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        ZonedDateTime afterDate = currentDate.plusDays(1);
         List<Band> bands = List.of(
                 new Band(1, "ASIAN KUNG-FU GENERATION", afterDate),
                 new Band(2, "Rhythmic Toy World", afterDate));
@@ -88,8 +95,4 @@ class BandServiceImplTest {
 
         verify(bandMapper, times(1)).findAllUniqueBands();
     }
-
-    ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
-    ZonedDateTime beforeDate = currentDate.minusDays(1);
-    ZonedDateTime afterDate = currentDate.plusDays(1);
 }
