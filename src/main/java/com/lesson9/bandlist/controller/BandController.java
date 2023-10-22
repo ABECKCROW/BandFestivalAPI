@@ -4,6 +4,7 @@ import com.lesson9.bandlist.CreateBandForm;
 import com.lesson9.bandlist.UpdateBandForm;
 import com.lesson9.bandlist.controller.response.BandResponse;
 import com.lesson9.bandlist.entity.Band;
+import com.lesson9.bandlist.exception.BandNotFoundException;
 import com.lesson9.bandlist.service.BandService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
@@ -36,7 +37,7 @@ public class BandController {
     private final HttpServletRequest request;
 
     @GetMapping("/names")
-    public List<BandResponse> allBandNames() throws NotFoundException {
+    public List<BandResponse> allBandNames() {
         List<Band> bandNames = bandService.findAllUniqueBands();
         return bandNames.stream().map(BandResponse::new).toList();
     }
@@ -61,7 +62,7 @@ public class BandController {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody UpdateBandForm form) throws NotFoundException {
+    public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody UpdateBandForm form) {
         Band updateBandForms = bandService.updateBands(id, form);
         return ResponseEntity.ok("Band update successful");
     }
@@ -72,7 +73,7 @@ public class BandController {
         return ResponseEntity.ok("Band with ID " + id + " has been deleted.");
     }
 
-    @ExceptionHandler(value = NotFoundException.class)
+    @ExceptionHandler(value = BandNotFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFound(
             NotFoundException e, HttpServletRequest request) {
         Map<String, String> body = new HashMap<>();

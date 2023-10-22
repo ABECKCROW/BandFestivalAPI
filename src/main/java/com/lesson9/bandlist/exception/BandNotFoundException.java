@@ -1,7 +1,7 @@
 package com.lesson9.bandlist.exception;
 
-public class NotFoundException extends RuntimeException {
-    public NotFoundException(String message) {
+public class BandNotFoundException extends RuntimeException {
+    public BandNotFoundException(String message) {
         super(message);
     }
 }

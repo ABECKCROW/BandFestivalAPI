@@ -3,8 +3,8 @@ package com.lesson9.bandlist.service;
 import com.lesson9.bandlist.UpdateBandForm;
 import com.lesson9.bandlist.entity.Band;
 import com.lesson9.bandlist.exception.ActAnnouncementDateNullException;
+import com.lesson9.bandlist.exception.BandNotFoundException;
 import com.lesson9.bandlist.mapper.BandMapper;
-import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -21,17 +21,17 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public List<Band> findAllUniqueBands() throws NotFoundException {
+    public List<Band> findAllUniqueBands() {
         List<Band> allBands = bandMapper.findAllUniqueBands();
         if (allBands == null) {
-            throw new NotFoundException("No bands were found.");
+            throw new BandNotFoundException("No bands were found.");
         }
         return allBands;
     }
 
     @Override
-    public Optional<Band> findById(int id) throws NotFoundException {
-        Band band = bandMapper.findById(id).orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
+    public Optional<Band> findById(int id) {
+        Band band = bandMapper.findById(id).orElseThrow(() -> new BandNotFoundException("Band not found with ID: " + id));
         return Optional.of(band);
     }
 
@@ -64,9 +64,9 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public Band updateBands(int id, UpdateBandForm form) throws NotFoundException {
+    public Band updateBands(int id, UpdateBandForm form) {
         Band existingBand = findById(id)
-                .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
+                .orElseThrow(() -> new BandNotFoundException("Band not found with ID: " + id));
 
         existingBand.setBandName(form.getBandName());
         existingBand.setActAnnouncementDate(form.getActAnnouncementDate());
