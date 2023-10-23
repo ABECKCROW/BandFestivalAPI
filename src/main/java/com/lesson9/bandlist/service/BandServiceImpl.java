@@ -2,7 +2,6 @@ package com.lesson9.bandlist.service;
 
 import com.lesson9.bandlist.UpdateBandForm;
 import com.lesson9.bandlist.entity.Band;
-import com.lesson9.bandlist.exception.ActAnnouncementDateNullException;
 import com.lesson9.bandlist.exception.BandNotFoundException;
 import com.lesson9.bandlist.mapper.BandMapper;
 import org.springframework.stereotype.Service;
@@ -22,11 +21,7 @@ public class BandServiceImpl implements BandService {
 
     @Override
     public List<Band> findAllUniqueBands() {
-        List<Band> allBands = bandMapper.findAllUniqueBands();
-        if (allBands == null) {
-            throw new BandNotFoundException("No bands were found.");
-        }
-        return allBands;
+        return bandMapper.findAllUniqueBands();
     }
 
     @Override
@@ -40,9 +35,6 @@ public class BandServiceImpl implements BandService {
         List<Band> allBands = bandMapper.findAllUniqueBands();
         return allBands.stream().filter(band -> {
                     ZonedDateTime announcementDate = band.getActAnnouncementDate();
-                    if (announcementDate == null) {
-                        throw new ActAnnouncementDateNullException("actAnnouncementDate is null");
-                    }
                     return announcementDate.isBefore(date);
                 })
                 .collect(Collectors.toList());
