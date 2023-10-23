@@ -1,4 +1,4 @@
-package com.lesson9.Bandlist.entity;
+package com.lesson9.bandlist.entity;
 
 public class Member {
     private int id;

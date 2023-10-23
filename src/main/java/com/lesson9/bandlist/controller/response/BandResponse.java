@@ -1,9 +1,11 @@
-package com.lesson9.Bandlist.controller.response;
+package com.lesson9.bandlist.controller.response;
 
-import com.lesson9.Bandlist.entity.Band;
+import com.lesson9.bandlist.entity.Band;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @Getter
+@EqualsAndHashCode
 public class BandResponse {
     private int id;
     private String bandName;

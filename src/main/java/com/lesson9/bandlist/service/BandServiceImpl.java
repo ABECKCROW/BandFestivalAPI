@@ -1,9 +1,9 @@
-package com.lesson9.Bandlist.service;
+package com.lesson9.bandlist.service;
 
-import com.lesson9.Bandlist.UpdateBandForm;
-import com.lesson9.Bandlist.entity.Band;
-import com.lesson9.Bandlist.mapper.BandMapper;
-import org.apache.ibatis.javassist.NotFoundException;
+import com.lesson9.bandlist.UpdateBandForm;
+import com.lesson9.bandlist.entity.Band;
+import com.lesson9.bandlist.exception.BandNotFoundException;
+import com.lesson9.bandlist.mapper.BandMapper;
 import org.springframework.stereotype.Service;
 
 import java.time.ZonedDateTime;
@@ -25,10 +25,9 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public Optional<Band> findById(int id) throws NotFoundException {
-        Optional<Band> band = bandMapper.findById(id);
-        return Optional.ofNullable(band)
-                .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
+    public Optional<Band> findById(int id) {
+        Band band = bandMapper.findById(id).orElseThrow(() -> new BandNotFoundException("Band not found with ID: " + id));
+        return Optional.of(band);
     }
 
     @Override
@@ -36,7 +35,7 @@ public class BandServiceImpl implements BandService {
         List<Band> allBands = bandMapper.findAllUniqueBands();
         return allBands.stream().filter(band -> {
                     ZonedDateTime announcementDate = band.getActAnnouncementDate();
-                    return announcementDate != null && announcementDate.isBefore(date);
+                    return announcementDate.isBefore(date);
                 })
                 .collect(Collectors.toList());
     }
@@ -57,9 +56,9 @@ public class BandServiceImpl implements BandService {
     }
 
     @Override
-    public Band updateBands(int id, UpdateBandForm form) throws NotFoundException {
-        Band existingBand = findById(id)
-                .orElseThrow(() -> new NotFoundException("Band not found with ID: " + id));
+    public Band updateBands(int id, UpdateBandForm form) {
+        Band existingBand = bandMapper.findById(id)
+                .orElseThrow(() -> new BandNotFoundException("Band not found with ID: " + id));
 
         existingBand.setBandName(form.getBandName());
         existingBand.setActAnnouncementDate(form.getActAnnouncementDate());

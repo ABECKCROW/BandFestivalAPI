@@ -1,18 +1,19 @@
-package com.lesson9.Bandlist.entity;
+package com.lesson9.bandlist;
 
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.time.ZonedDateTime;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
-public class Band {
-    private int id;
+public class UpdateBandForm {
+
+    @Size(max = 204)
     private String bandName;
+
     private ZonedDateTime actAnnouncementDate;
 }

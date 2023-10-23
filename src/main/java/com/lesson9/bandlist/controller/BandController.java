@@ -1,15 +1,17 @@
-package com.lesson9.Bandlist.controller;
+package com.lesson9.bandlist.controller;
 
-import com.lesson9.Bandlist.CreateBandForm;
-import com.lesson9.Bandlist.UpdateBandForm;
-import com.lesson9.Bandlist.controller.response.BandResponse;
-import com.lesson9.Bandlist.entity.Band;
-import com.lesson9.Bandlist.service.BandService;
+import com.lesson9.bandlist.CreateBandForm;
+import com.lesson9.bandlist.UpdateBandForm;
+import com.lesson9.bandlist.controller.response.BandResponse;
+import com.lesson9.bandlist.entity.Band;
+import com.lesson9.bandlist.exception.BandNotFoundException;
+import com.lesson9.bandlist.service.BandService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
-import org.apache.ibatis.javassist.NotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,7 +23,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
 import java.time.ZonedDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -57,7 +61,7 @@ public class BandController {
     }
 
     @PatchMapping("/update/{id}")
-    public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody UpdateBandForm form) throws NotFoundException {
+    public ResponseEntity<String> update(@PathVariable("id") int id, @RequestBody UpdateBandForm form) {
         Band updateBandForms = bandService.updateBands(id, form);
         return ResponseEntity.ok("Band update successful");
     }
@@ -67,4 +71,17 @@ public class BandController {
         bandService.deleteBands(id);
         return ResponseEntity.ok("Band with ID " + id + " has been deleted.");
     }
+
+    @ExceptionHandler(value = BandNotFoundException.class)
+    public ResponseEntity<Map<String, String>> handleNotFound(
+            BandNotFoundException e, HttpServletRequest request) {
+        Map<String, String> body = new HashMap<>();
+        body.put("timestamp", ZonedDateTime.now().toString());
+        body.put("status", String.valueOf(HttpStatus.NOT_FOUND.value()));
+        body.put("error", HttpStatus.NOT_FOUND.getReasonPhrase());
+        body.put("message", e.getMessage());
+        body.put("path", request.getRequestURI());
+        return new ResponseEntity<>(body, HttpStatus.NOT_FOUND);
+    }
 }
+
