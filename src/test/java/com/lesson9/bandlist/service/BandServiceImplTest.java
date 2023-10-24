@@ -1,5 +1,6 @@
 package com.lesson9.bandlist.service;
 
+import com.lesson9.bandlist.CreateBandForm;
 import com.lesson9.bandlist.entity.Band;
 import com.lesson9.bandlist.mapper.BandMapper;
 import org.apache.ibatis.javassist.NotFoundException;
@@ -95,4 +96,42 @@ class BandServiceImplTest {
 
         verify(bandMapper, times(1)).findAllUniqueBands();
     }
+
+    @Test
+    public void バンド登録ができること() {
+        ZonedDateTime currentDate = ZonedDateTime.now(ZoneId.of("UTC"));
+        CreateBandForm createBandForm = new CreateBandForm("ASIAN KUNG-FU GENERATION", currentDate);
+        Band expectedBand = new Band(1, "ASIAN KUNG-FU GENERATION", currentDate);
+        doReturn(new Band(1, "ASIAN KUNG-FU GENERATION", currentDate)).when(bandMapper).createAndGetId(expectedBand);
+
+        assertThat(BandServiceImpl.createBands(CreateBandForm)).isEqualTo(createBandForm);
+        verify(bandMapper, times(1)).createAndGetId(expectedBand);
+    }
+
+    @Test
+    public void 登録したバンドが重複していた時に例外がスローされること() {
+
+    }
+
+    @Test
+    public void バンドが更新できること() {
+
+    }
+
+    @Test
+    public void 更新するバンドがない時に例外がスローされること() {
+
+    }
+
+    @Test
+    public void バンドが削除できること() {
+
+    }
+
+    @Test
+    public void 削除するバンドがないときに例外がスローされること() {
+
+    }
+
+
 }
