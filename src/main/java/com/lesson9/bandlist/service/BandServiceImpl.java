@@ -51,10 +51,6 @@ public class BandServiceImpl implements BandService {
         return newBand.getId();
     }
 
-    private Optional<Band> isBandNameDuplicate(String bandName) {
-        return bandMapper.findByName(bandName);
-    }
-
     @Override
     public Band updateBands(int id, UpdateBandForm form) {
         Band existingBand = bandMapper.findById(id)
